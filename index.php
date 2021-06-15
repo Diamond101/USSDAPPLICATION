@@ -1,63 +1,94 @@
 <?php
-// Reads the variables sent via POST from our gateway
-$sessionId   = $_POST["sessionId"];
-$serviceCode = $_POST["serviceCode"];
-$phoneNumber = $_POST["phoneNumber"];
-$text        = $_POST["text"];
-
+// Reads the variables sent via POST
+$sessionId   = $_POST["sessionId"];  
+$serviceCode = $_POST["serviceCode"];  
+$text = $_POST["text"];
+//This is the first menu screen
 if ( $text == "" ) {
-
-	 // This is the first request. Note how we start the response with CON
-	 $response  = "CON What would you want to check \n";
-	 $response .= "1. My Account \n";
-	 $response .= "2. My phone number";
-
+$response  = "CON Hi welcome, I can help you with Event Reservation \n";
+$response .= "1. Enter 1 to continue";
 }
-
-else if ( $text == "1" ) {
-  // Business logic for first level response
-  $response = "CON Choose account information you want to view \n";
-  $response .= "1. Account number \n";
-  $response .= "2. Account balance";
-  
- }
- 
- else if($text == "2") {
-  // This is a terminal request. Note how we start the response with END
-  $response = "END Your phone number is $phoneNumber";
- }
-
- 
- else if($text == "1*1") {
- 
-  // This is a second level response where the user selected 1 in the first instance
-  $accountNumber  = "ACC1001";
-  // This is a terminal request. Note how we start the response with END
-  $response = "END Your account number is $accountNumber";
- }
-	
- else if ( $text == "1*2" ) {
-  
-	// This is a second level response where the user selected 1 in the first instance
-    $response = "END Your account number is NGN 10,000";
-	// SMS New Balance
-	$code = '20880';//use a senderId mapped to your account
-	//you can call a db for user number and data
-	$recipients = $phoneNumber;
-	$message    = "Your new balance is ".$balance.". Thank you.";
-	$gateway    = new AfricasTalkingGateway($username, $apikey);
-	try { $results = $gateway->sendMessage($recipients, $message, $code); }
-	catch ( AfricasTalkingGatewayException $e ) {echo "Encountered an error while sending: ".$e->getMessage(); }
-
-	 
-	 // This is a terminal request. Note how we start the response with END
-	 $response = "END Your balance is $balance";
-
+// Menu for a user who selects '1' from the first menu
+// Will be brought to this second menu screen
+else if ($text == "1") {
+$response  = "CON  Pick a table for reservation below \n";
+$response .= "1. Table for 2 \n";
+$response .= "2. Table for 4 \n";
+$response .= "3. Table for 6 \n";
+$response .= "4. Table for 8 \n";
 }
-
-// Print the response onto the page so that our gateway can read it
+//Menu for a user who selects '1' from the second menu above
+// Will be brought to this third menu screen
+else if ($text == "1*1") {
+$response = "CON You are about to book a table for 2 \n";
+$response .= "Please Enter 1 to confirm \n";
+}
+else if ($text == "1*1*1") {
+$response = "CON Table for 2 cost -N- 50,000.00 \n";
+$response .= "Enter 1 to continue \n";
+$response .= "Enter 0 to cancel";
+}
+else if ($text == "1*1*1*1") {
+$response = "END Your Table reservation for 2 has been booked";
+}
+else if ($text == "1*1*1*0") {
+$response = "END Your Table reservation for 2 has been canceled";
+}
+// Menu for a user who selects "2" from the second menu above
+// Will be brought to this fourth menu screen
+else if ($text == "1*2") {
+$response = "CON You are about to book a table for 4 \n";
+$response .= "Please Enter 1 to confirm \n";
+}
+// Menu for a user who selects "1" from the fourth menu screen
+else if ($text == "1*2*1") {
+$response = "CON Table for 4 cost -N- 150,000.00 \n";
+$response .= "Enter 1 to continue \n";
+$response .= "Enter 0 to cancel";
+}
+else if ($text == "1*2*1*1") {
+$response = "END Your Table reservation for 4 has been booked";
+}
+else if ($text == "1*2*1*0") {
+$response = "END Your Table reservation for 4 has been canceled";
+}
+// Menu for a user who enters "3" from the second menu above
+// Will be brought to this fifth menu screen
+else if ($text == "1*3") {
+$response = "CON You are about to book a table for 6 \n";
+$response .= "Please Enter 1 to confirm \n";
+}
+// Menu for a user who enters "1" from the fifth menu
+else if ($text == "1*3*1") {
+$response = "CON Table for 6 cost -N- 250,000.00 \n";
+$response .= "Enter 1 to continue \n";
+$response .= "Enter 0 to cancel";
+}
+else if ($text == "1*3*1*1") {
+$response = "END Your Table reservation for 6 has been booked";
+}
+else if ($text == "1*3*1*0") {
+$response = "END Your Table reservation for 6 has been canceled";
+}
+// Menu for a user who enters "4" from the second menu above
+// Will be brought to this sixth menu screen
+else if ($text == "1*4") {
+$response = "CON You are about to book a table for 8 \n";
+$response .= "Please Enter 1 to confirm \n";
+}
+// Menu for a user who enters "1" from the sixth menu
+else if ($text == "1*4*1") {
+$response = "CON Table for 8 cost -N- 250,000.00 \n";
+$response .= "Enter 1 to continue \n";
+$response .= "Enter 0 to cancel";
+}
+else if ($text == "1*4*1*1") {
+$response = "END Your Table reservation for 8 has been booked";
+}
+else if ($text == "1*4*1*0") {
+$response = "END Your Table reservation for 8 has been canceled";
+}
+//echo response
 header('Content-type: text/plain');
-echo $response;
-
-// DONE!!!
+echo $response
 ?>
