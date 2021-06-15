@@ -1,11 +1,4 @@
 <?php
-//in case you are connecting to a database
-require_once('dbConnector.php');
-//include the Africa's Talking Library
-require_once('AfricasTalkingGateway.php');
-//include a config file with your API Key and username etc.
-require_once('config.php');
-
 // Reads the variables sent via POST from our gateway
 $sessionId   = $_POST["sessionId"];
 $serviceCode = $_POST["serviceCode"];
