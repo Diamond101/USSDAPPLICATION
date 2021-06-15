@@ -39,7 +39,7 @@ else if ( $text == "1" ) {
  else if ( $text == "1*2" ) {
   
 	// This is a second level response where the user selected 1 in the first instance
-	$balance  = "NGN 10,000";
+    $response = "END Your account number is NGN 10,000";
 	// SMS New Balance
 	$code = '20880';//use a senderId mapped to your account
 	//you can call a db for user number and data
